@@ -42,7 +42,7 @@ class ChromeDriverPlugin implements PluginInterface, EventSubscriberInterface
      * @var IOInterface
      */
     protected $io;
-    
+
     /**
      * @var Cache
      */

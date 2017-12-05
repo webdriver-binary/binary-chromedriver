@@ -11,7 +11,6 @@
     "Linux",
     "Windows"
   ],
-  "version": "1.1.0",
   "homepage": "https://github.com/lbaey",
   "license": "MIT",
   "autoload": {
@@ -23,6 +22,10 @@
     {
       "name": "Laurent Baey",
       "email": "laurent.baey@gmail.com"
+    },
+    {
+      "name": "Allan Paiste",
+      "email": "allan.paiste@vaimo.com"
     }
   ],
   "minimum-stability": "dev",
