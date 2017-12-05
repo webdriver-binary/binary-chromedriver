@@ -27,6 +27,7 @@ use Composer\Util\ProcessExecutor;
  */
 class ChromeDriverPlugin implements PluginInterface, EventSubscriberInterface
 {
+    const UNKNOWN = 'unknown';
     const LINUX32 = 'linux32';
     const LINUX64 = 'linux64';
     const MAC64 = 'mac64';
@@ -41,19 +42,14 @@ class ChromeDriverPlugin implements PluginInterface, EventSubscriberInterface
      * @var IOInterface
      */
     protected $io;
-
-    /**
-     * @var string
-     */
-    protected $platform;
-
+    
     /**
      * @var Cache
      */
     protected $cache;
 
     /**
-     * @var Config\
+     * @var Config
      */
     protected $config;
 
@@ -124,9 +120,11 @@ class ChromeDriverPlugin implements PluginInterface, EventSubscriberInterface
             $version = $extra['lbaey/chromedriver']['chromedriver-version'];
         }
 
-        $this->guessPlatform();
+        $platformType = $this->getPlatform();
 
-        $chromeDriverPath = $this->config->get('bin-dir') . DIRECTORY_SEPARATOR . $this->getExecutableFileName();
+        $executableName = $this->getExecutableFileName();
+
+        $chromeDriverPath = $this->config->get('bin-dir') . DIRECTORY_SEPARATOR . $executableName;
         $output = '';
 
         if (file_exists($chromeDriverPath) && is_executable($chromeDriverPath)) {
@@ -145,22 +143,24 @@ class ChromeDriverPlugin implements PluginInterface, EventSubscriberInterface
         $fs->ensureDirectoryExists($this->cache->getRoot() . $version);
         $fs->ensureDirectoryExists($this->config->get('bin-dir'));
 
-        $chromeDriverArchiveCacheFileName = $this->cache->getRoot() . $version . DIRECTORY_SEPARATOR . $this->getRemoteFileName();
+        $chromeDriverArchiveCacheFileName = $this->cache->getRoot() . $version . DIRECTORY_SEPARATOR . $executableName;
 
         if (!$this->cache->isEnabled() || !file_exists($chromeDriverArchiveCacheFileName)) {
             $this->io->write(sprintf(
                 "Downloading ChromeDriver version %s for %s",
                 $version,
-                $this->getPlatformNames()[$this->platform]
+                $this->getPlatformNames()[$platformType]
             ));
+
             $chromeDriverOriginUrl = "https://chromedriver.storage.googleapis.com";
 
             /** @var RemoteFilesystem $remoteFileSystem */
-            $remoteFileSystem = Factory::createRemoteFilesystem($this->io, $this->config);
-            $remoteFileSystem->copy(
-                $chromeDriverOriginUrl,
-                $chromeDriverOriginUrl . '/' . $version . '/' . $this->getRemoteFileName(),
-                $chromeDriverArchiveCacheFileName
+
+            $fileOrigin = $chromeDriverOriginUrl . '/' . $version . '/' . $this->getRemoteFileName();
+
+            file_put_contents(
+                $chromeDriverArchiveCacheFileName,
+                fopen($fileOrigin, 'r')
             );
         } else {
             $this->io->write(sprintf(
@@ -173,40 +173,31 @@ class ChromeDriverPlugin implements PluginInterface, EventSubscriberInterface
         $archive->open($chromeDriverArchiveCacheFileName);
         $archive->extractTo($this->config->get('bin-dir'));
 
-        if ($this->platform !== self::WIN32) {
-            chmod($this->config->get('bin-dir') . DIRECTORY_SEPARATOR . $this->getExecutableFileName(), 0755);
+        if ($this->getPlatform() !== self::WIN32) {
+            chmod($this->config->get('bin-dir') . DIRECTORY_SEPARATOR . $executableName, 0755);
         }
-
     }
 
     /**
      *
      */
-    protected function guessPlatform()
+    protected function getPlatform()
     {
         if (stripos(PHP_OS, 'win') === 0) {
-            $this->platform = self::WIN32;
+            return self::WIN32;
         } elseif (stripos(PHP_OS, 'darwin') === 0) {
-            $this->platform = self::MAC64;
+            return self::MAC64;
         } elseif (stripos(PHP_OS, 'linux') === 0) {
-
             if (PHP_INT_SIZE === 8) {
-                $this->platform = self::LINUX64;
+                return self::LINUX64;
             } else {
-                $this->platform = self::LINUX32;
+                return self::LINUX32;
             }
-
-        } else {
-            $this->io->writeError('Could not guess your platform, download chromedriver manually.');
-
-            return;
         }
 
-        $extra = $this->composer->getPackage()->getExtra();
+        $this->io->writeError('Could not guess your platform, download chromedriver manually.');
 
-        if (empty($extra['lbaey/chromedriver']['bypass-select'])) {
-            $this->platform = $this->io->select('Please select the platform :', $this->getPlatformNames(), $this->platform);
-        }
+        return null;
     }
 
     /**
@@ -215,7 +206,7 @@ class ChromeDriverPlugin implements PluginInterface, EventSubscriberInterface
      */
     protected function getRemoteFileName()
     {
-        switch ($this->platform) {
+        switch ($this->getPlatform()) {
             case self::LINUX32:
                 return "chromedriver_linux32.zip";
             case self::LINUX64:
@@ -235,7 +226,7 @@ class ChromeDriverPlugin implements PluginInterface, EventSubscriberInterface
      */
     protected function getExecutableFileName()
     {
-        switch ($this->platform) {
+        switch ($this->getPlatform()) {
             case self::LINUX32:
             case self::LINUX64:
             case self::MAC64:

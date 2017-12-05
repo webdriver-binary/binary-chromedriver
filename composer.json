@@ -27,6 +27,7 @@
   ],
   "minimum-stability": "dev",
   "type": "composer-plugin",
+  "secure-http": false,
   "require": {
     "ext-zip": "*",
     "composer-plugin-api": "^1"
