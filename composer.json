@@ -2,7 +2,7 @@
     "name": "vaimo/chromedriver",
     "type": "composer-plugin",
     "license": "MIT",
-    "description": "Utility for installing Chromedriver, whatever platform you are on, for use with Behat",
+    "description": "Utility for installing Chrome Driver, whatever platform you are on, for use with Behat",
     "authors": [
         {
             "name": "Laurent Baey",
@@ -23,23 +23,19 @@
         "composer-plugin-api": "^1.0"
     },
     "keywords": [
-        "Chromedriver",
-        "Browser Testing",
-        "Selenium",
-        "Behat",
-        "OSX",
-        "Mac",
-        "Linux",
-        "Windows"
+        "chromedriver",
+        "acceptance testing",
+        "browser testing",
+        "downloader"
     ],
     "autoload": {
-        "psr-0": {
-            "Lbaey": "src/"
+        "psr-4": {
+            "Lbaey\\ChromeDriver\\": "src"
         }
     },
     "minimum-stability": "dev",
     "extra": {
-        "class": "Lbaey\\Composer\\ChromeDriverPlugin",
+        "class": "Lbaey\\ChromeDriver\\Plugin",
         "changelog": {
             "1.2.0": {
                 "feature": [

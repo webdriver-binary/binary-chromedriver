@@ -1,13 +1,10 @@
 <?php
-
-namespace Lbaey\Composer;
-
-/*
- * This file is part of chromedriver composer plugin.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+/**
+ * Copyright © Laurent Baey. All rights reserved.
+ * See LICENSE.txt for license details.
  */
+namespace Lbaey\ChromeDriver;
+
 use Composer\Cache;
 use Composer\Composer;
 use Composer\Config;
@@ -22,10 +19,7 @@ use Composer\Util\Filesystem;
 use Composer\Util\RemoteFilesystem;
 use Composer\Util\ProcessExecutor;
 
-/**
- * @author Laurent Baey <laurent.baey@gmail.com>
- */
-class ChromeDriverPlugin implements PluginInterface, EventSubscriberInterface
+class Plugin implements PluginInterface, EventSubscriberInterface
 {
     const UNKNOWN = 'unknown';
     const LINUX32 = 'linux32';
