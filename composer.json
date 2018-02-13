@@ -37,6 +37,12 @@
     "extra": {
         "class": "Lbaey\\ChromeDriver\\Plugin",
         "changelog": {
+            "1.2.1": {
+                "maintenance": [
+                    "file structure simplified",
+                    "meta-data cleanup"
+                ]
+            },
             "1.2.0": {
                 "feature": [
                     "latest chrome driver version auto-detection by contacting Google Storage API",
