@@ -52,7 +52,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     protected $versionParser;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->versionParser = new \Composer\Semver\VersionParser();
     }
@@ -121,7 +121,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         return str_replace(array_keys($variables), $variables, $template);
     }
-    
+
     private function validateVersion($version)
     {
         try {
@@ -130,7 +130,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             throw new \Exception(sprintf('Incorrect version string: "%s"', $version));
         }
     }
-    
+
     private function getHeaders($url)
     {
         $headers = get_headers($url);
@@ -144,11 +144,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }, $headers)
         );
     }
-    
+
     protected function installDriver(Event $event)
     {
         $extra = $this->composer->getPackage()->getExtra();
-        
+
         $baseUrl = 'https://chromedriver.storage.googleapis.com';
         $downloadUrlTemplate = '{{base}}/{{version}}/{{file}}';
         $versionUrlTemplate = '{{base}}/LATEST_RELEASE';
@@ -156,23 +156,25 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $defaults = array(
             'version' => null
         );
-        
+
         $config = array_replace(
-            $defaults, 
+            $defaults,
             isset($extra['lbaey/chromedriver']) ? $extra['lbaey/chromedriver'] : array()
         );
-        
+
         if (isset($config['chromedriver-version'])) {
             $config['version'] = $config['chromedriver-version'];
         }
-        
+
         if (!$config['version']) {
             $versionCheckUrl = $this->stringFromTemplate($versionUrlTemplate, array(
                 'base' => $baseUrl
             ));
 
-            $this->io->write('<info>Polling for the latest version of ChromeDriver</info>');
-            
+            if ($this->io->isVerbose()) {
+                $this->io->write('<info>Polling for the latest version of ChromeDriver</info>');
+            }
+
             $version = trim(@file_get_contents($versionCheckUrl));
         } else {
             $version = $config['version'];
@@ -180,7 +182,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         $this->validateVersion($version);
 
-        $this->io->write(sprintf('<comment>Using version %s</comment>', $version));
+        if ($this->io->isVerbose()) {
+            $this->io->write(sprintf('<comment>Using version %s</comment>', $version));
+        }
 
         $platformType = $this->getPlatform();
 
@@ -195,36 +199,38 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $processExecutor->execute($chromeDriverPath . ' --version', $output);
 
             if (strpos($output, 'ChromeDriver ' . $version) === 0) {
-                $this->io->write(
-                    sprintf('The right version %s of ChromeDriver is already installed', $version)
-                );
-                
+                if ($this->io->isVerbose()) {
+                    $this->io->write(sprintf('ChromeDriver v%s is already installed', $version));
+                }
+
                 return;
             }
         }
+
+        $this->io->write(sprintf('<info>Installing <comment>ChromeDriver</comment> (v%s)</info>', $version));
 
         $fs = new Filesystem();
         $fs->ensureDirectoryExists($this->cache->getRoot() . $version);
         $fs->ensureDirectoryExists($this->config->get('bin-dir'));
 
         $chromeDriverArchiveCacheFileName = $this->cache->getRoot() . $version . DIRECTORY_SEPARATOR . $executableName;
-        
+
         if (!$this->cache->isEnabled() || !file_exists($chromeDriverArchiveCacheFileName)) {
             $platformNames = $this->getPlatformNames();
-            
+
             $fileUrl = $this->stringFromTemplate($downloadUrlTemplate, array(
                 'base' => $baseUrl,
                 'version' => $version,
                 'file' => $this->getRemoteFileName()
             ));
-            
+
             $headers = $this->getHeaders($fileUrl);
             $remoteTag = trim($headers['ETag'], '" ');
-            
+
             if (!isset($headers['ETag'])) {
                 throw new \Exception('Failed to acquire entity tag (ETag) from Google Storage API headers');
             }
-            
+
             $this->io->write(sprintf(
                 'Downloading ChromeDriver version %s for %s (%s)',
                 $version,
@@ -233,22 +239,28 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             ));
 
             @file_put_contents(
-                $chromeDriverArchiveCacheFileName, 
+                $chromeDriverArchiveCacheFileName,
                 @fopen($fileUrl, 'r')
             );
 
             $localTag = md5_file($chromeDriverArchiveCacheFileName);
-            
+
             if ($localTag !== $remoteTag) {
                 unlink($chromeDriverArchiveCacheFileName);
-                
+
                 throw new \Exception(
                     sprintf('File validation failed: %s != %s', $localTag, $remoteTag)
                 );
             }
         } else {
-            $this->io->write(sprintf('Using cached version of %s', $this->getRemoteFileName()));
+            if ($this->io->isVerbose()) {
+                $this->io->write(sprintf('Using cached version of %s', $this->getRemoteFileName()));
+            } else {
+                $this->io->write('Loading from cache');
+            }
         }
+
+        $this->io->write(sprintf('<info>Done</info>', $version));
 
         $archive = new \ZipArchive();
         $archive->open($chromeDriverArchiveCacheFileName);
