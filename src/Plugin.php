@@ -378,7 +378,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $majorVersion = strtok($chromeVersion, '.');
 
         $versionMap = $this->getVersionRequirementMap();
-
+        
         foreach ($versionMap as $browserMajor => $driverVersion) {
             if ($majorVersion < $browserMajor) {
                 continue;
