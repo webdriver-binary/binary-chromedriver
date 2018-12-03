@@ -22,6 +22,9 @@
         "ext-zip": "*",
         "composer-plugin-api": "^1.0"
     },
+    "require-dev": {
+        "vaimo/composer-changelogs": "^0.9.1"
+    },
     "keywords": [
         "chromedriver",
         "acceptance testing",
@@ -35,6 +38,9 @@
     },
     "minimum-stability": "dev",
     "extra": {
-        "class": "Lbaey\\ChromeDriver\\Plugin"
+        "class": "Lbaey\\ChromeDriver\\Plugin",
+        "changelog": {
+            "source": "changelog.json"
+        }
     }
 }

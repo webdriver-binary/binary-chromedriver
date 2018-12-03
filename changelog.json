@@ -1,0 +1,7 @@
+{
+    "2.8.0": {
+        "feature": [
+            "choose chromeDriver version based on installed Chrome Browser version (if it's available)"
+        ]
+    }
+}
