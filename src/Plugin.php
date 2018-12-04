@@ -53,13 +53,13 @@ class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatc
             \Composer\Script\ScriptEvents::POST_UPDATE_CMD => 'onPostUpdateCmd',
         );
     }
-    
+
     public function activate(\Composer\Composer $composer, \Composer\IO\IOInterface $io)
     {
         $this->composer = $composer;
         $this->io = $io;
         $this->config = $this->composer->getConfig();
-        
+
         $this->cache = new \Composer\Cache(
             $this->io,
             implode(DIRECTORY_SEPARATOR, [
@@ -75,7 +75,7 @@ class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatc
     {
         $this->installDriver($event);
     }
-    
+
     public function onPostUpdateCmd(\Composer\Script\Event $event)
     {
         $this->installDriver($event);
@@ -90,19 +90,27 @@ class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatc
 
         $config = $this->getPluginConfig();
 
+        $version = $config['version'];
+        
         if (!$config['version']) {
-            $versionCheckUrl = $this->stringFromTemplate($versionUrlTemplate, array(
-                'base' => $baseUrl
-            ));
+            $version = $this->resolveRequiredVersion();
 
-            if ($this->io->isVerbose()) {
-                $this->io->write('<info>Polling for the latest version of ChromeDriver</info>');
+            if ($version && $this->io->isVerbose()) {
+                $this->io->write('<info>ChromeDriver version chosen base on installed Chrome browser</info>');
             }
+            
+            if (!$version) {
+                $versionCheckUrl = $this->stringFromTemplate($versionUrlTemplate, array(
+                    'base' => $baseUrl
+                ));
 
-            $version = trim(@file_get_contents($versionCheckUrl));
-        } else {
-            $version = $config['version'];
-        }
+                if ($this->io->isVerbose()) {
+                    $this->io->write('<info>Polling for the latest version of ChromeDriver</info>');
+                }
+
+                $version = trim(@file_get_contents($versionCheckUrl));   
+            }
+        } 
 
         $this->validateVersion($version);
 
@@ -301,11 +309,101 @@ class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatc
 
     private function getPlatformNames()
     {
-        return [
+        return array (
             self::LINUX32 => 'Linux 32Bits',
             self::LINUX64 => 'Linux 64Bits',
             self::MAC64 => 'Mac OS X',
             self::WIN32 => 'Windows'
-        ];
+        );
+    }
+    
+    private function resolveChromeVersion()
+    {
+        $chromePaths = array(
+            self::LINUX64 => array(
+                '/usr/bin/google-chrome'
+            ),
+            self::MAC64 => array(
+                '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+            )
+        );
+        
+        switch ($this->getPlatform()) {
+            case self::LINUX32:
+            case self::LINUX64:
+                $chromePaths = $chromePaths[self::LINUX64];
+                
+                break;
+            default:
+            case self::MAC64:
+                $chromePaths = $chromePaths[self::MAC64];
+                
+                break;
+        }
+        
+        foreach ($chromePaths as $path) {
+            if (!is_executable($path)) {
+                continue;
+            }
+
+            $output = trim(exec(sprintf('%s -version', $path)));
+            $versionCandidates = sscanf($output, 'Google Chrome %s');
+
+            try {
+                $this->validateVersion(reset($versionCandidates));
+            } catch (\Exception $exception) {
+                return 'NOPE';
+            }
+
+            return reset($versionCandidates);
+        }
+
+        return '';
+    }
+    
+    private function resolveRequiredVersion()
+    {
+        $chromeVersion = $this->resolveChromeVersion();
+        
+        if (!$chromeVersion) {
+            return '';
+        }
+
+        $majorVersion = strtok($chromeVersion, '.');
+
+        $versionMap = $this->getVersionRequirementMap();
+        
+        foreach ($versionMap as $browserMajor => $driverVersion) {
+            if ($majorVersion < $browserMajor) {
+                continue;
+            }
+
+            return $driverVersion;
+        }
+        
+        return '';   
+    }
+    
+    private function getVersionRequirementMap()
+    {
+        return array(
+            '72' => '',
+            '69' => '2.44',
+            '68' => '2.42',
+            '67' => '2.41',
+            '66' => '2.40',
+            '65' => '2.38',
+            '64' => '2.37',
+            '63' => '2.36',
+            '62' => '2.35',
+            '61' => '2.34',
+            '60' => '2.33',
+            '57' => '2.28',
+            '54' => '2.25',
+            '53' => '2.24',
+            '51' => '2.22',
+            '44' => '2.19',
+            '42' => '2.15'
+        );
     }
 }
