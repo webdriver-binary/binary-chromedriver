@@ -1,7 +1,9 @@
 {
     "3.0.0": {
         "breaking": [
-            "namespace changed to be under Vaimo"
+            "namespace changed to be under Vaimo",
+            "class properties and functions switched from 'protected' to 'private' (no real need to keep them exposed)",
+            "plugin class split in two (only directly plugin-bootstrapping related remain in Plugin class)"
         ],
         "feature": [
             "added information about what this package is replacing"
