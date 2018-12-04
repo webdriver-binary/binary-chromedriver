@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "3.0.0": {
         "breaking": [
             "namespace changed to be under Vaimo"
@@ -7,13 +6,10 @@
         "feature": [
             "added information about what this package is replacing"
         ]
-    }
-}
-=======
+    },
     "2.36.0": {
         "feature": [
             "choose chromeDriver version based on installed Chrome Browser version (if it's available)"
         ]
     }
 }
->>>>>>> 29fed082e2629a9cffdfc0782ce75daedae435ac
