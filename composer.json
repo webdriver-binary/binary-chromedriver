@@ -2,7 +2,17 @@
     "name": "vaimo/binary-chromedriver",
     "type": "composer-plugin",
     "license": "MIT",
-    "description": "Utility for installing Chrome Driver, whatever platform you are on, for use with Behat",
+    "description": "Utility for downloading Chrome Driver binary for current os/platform",
+    "require": {
+        "ext-zip": "*",
+        "composer-plugin-api": "^1.0"
+    },
+    "require-dev": {
+        "vaimo/composer-changelogs": "^0.9.1"
+    },
+    "replace": {
+        "lbaey/chromedriver": "*"
+    },
     "authors": [
         {
             "name": "Laurent Baey",
@@ -18,23 +28,26 @@
         "docs": "https://github.com/vaimo/chromedriver",
         "issues": "https://github.com/vaimo/chromedriver/issues"
     },
-    "require": {
-        "ext-zip": "*",
-        "composer-plugin-api": "^1.0"
-    },
     "keywords": [
         "chromedriver",
+        "chrome automation",
+        "testing",
+        "test-automation",
         "acceptance testing",
         "browser testing",
-        "downloader"
+        "downloader",
+        "binary downloader",
+        "binary"
     ],
     "autoload": {
         "psr-4": {
-            "Lbaey\\ChromeDriver\\": "src"
+            "Vaimo\\ChromeDriver\\": "src"
         }
     },
-    "minimum-stability": "dev",
     "extra": {
-        "class": "Lbaey\\ChromeDriver\\Plugin"
+        "class": "Vaimo\\ChromeDriver\\Plugin",
+        "changelog": {
+            "source": "changelog.json"
+        }
     }
 }

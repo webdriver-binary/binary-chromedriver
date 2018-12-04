@@ -1,0 +1,10 @@
+{
+    "3.0.0": {
+        "breaking": [
+            "namespace changed to be under Vaimo"
+        ],
+        "feature": [
+            "added information about what this package is replacing"
+        ]
+    }
+}

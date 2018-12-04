@@ -2,8 +2,11 @@
 /**
  * Copyright © Laurent Baey. All rights reserved.
  * See LICENSE.txt for license details.
+ * 
+ * Copyright © Vaimo Group. All rights reserved.
+ * See LICENSE_VAIMO.txt for license details.
  */
-namespace Lbaey\ChromeDriver;
+namespace Vaimo\ChromeDriver;
 
 use Composer\Cache;
 use Composer\Composer;
@@ -109,62 +112,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $this->installDriver($event);
     }
-
-    private function stringFromTemplate($template, array $values)
-    {
-        $variables = array_combine(
-            array_map(function ($name) {
-                return sprintf('{{%s}}', $name);
-            }, array_keys($values)),
-            $values
-        );
-
-        return str_replace(array_keys($variables), $variables, $template);
-    }
-
-    private function validateVersion($version)
-    {
-        try {
-            $this->versionParser->parseConstraints($version);
-        } catch (\UnexpectedValueException $exception) {
-            throw new \Exception(sprintf('Incorrect version string: "%s"', $version));
-        }
-    }
-
-    private function getHeaders($url)
-    {
-        $headers = get_headers($url);
-
-        return array_combine(
-            array_map(function ($value) {
-                return strtok($value, ':');
-            }, $headers),
-            array_map(function ($value) {
-                return trim(substr($value, strpos($value, ':')), ': ');
-            }, $headers)
-        );
-    }
-
+    
     protected function installDriver(Event $event)
     {
-        $extra = $this->composer->getPackage()->getExtra();
-
         $baseUrl = 'https://chromedriver.storage.googleapis.com';
         $downloadUrlTemplate = '{{base}}/{{version}}/{{file}}';
         $versionUrlTemplate = '{{base}}/LATEST_RELEASE';
 
-        $defaults = array(
-            'version' => null
-        );
-
-        $config = array_replace(
-            $defaults,
-            isset($extra['lbaey/chromedriver']) ? $extra['lbaey/chromedriver'] : array()
-        );
-
-        if (isset($config['chromedriver-version'])) {
-            $config['version'] = $config['chromedriver-version'];
-        }
+        $config = $this->getPluginConfig();
 
         if (!$config['version']) {
             $versionCheckUrl = $this->stringFromTemplate($versionUrlTemplate, array(
@@ -271,10 +226,62 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         }
     }
 
-    /**
-     *
-     */
-    protected function getPlatform()
+    private function stringFromTemplate($template, array $values)
+    {
+        $variables = array_combine(
+            array_map(function ($name) {
+                return sprintf('{{%s}}', $name);
+            }, array_keys($values)),
+            $values
+        );
+
+        return str_replace(array_keys($variables), $variables, $template);
+    }
+
+    private function validateVersion($version)
+    {
+        try {
+            $this->versionParser->parseConstraints($version);
+        } catch (\UnexpectedValueException $exception) {
+            throw new \Exception(sprintf('Incorrect version string: "%s"', $version));
+        }
+    }
+
+    private function getHeaders($url)
+    {
+        $headers = get_headers($url);
+
+        return array_combine(
+            array_map(function ($value) {
+                return strtok($value, ':');
+            }, $headers),
+            array_map(function ($value) {
+                return trim(substr($value, strpos($value, ':')), ': ');
+            }, $headers)
+        );
+    }
+
+    private function getPluginConfig()
+    {
+        $rootPackage = $this->composer->getPackage();
+
+        $extra = $rootPackage->getExtra();
+
+        $defaults = array(
+            'version' => null
+        );
+
+        $config =  array_replace(
+            $defaults,
+            isset($extra['chromedriver']) ? $extra['chromedriver'] : array()
+        );
+
+        if (isset($config['chromedriver-version'])) {
+            $config['version'] = $config['chromedriver-version'];
+        }
+    }
+
+    private function getPlatform()
     {
         if (stripos(PHP_OS, 'win') === 0) {
             return self::WIN32;
@@ -293,31 +300,23 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         return null;
     }
 
-    /**
-     * @return string
-     * @throws \Exception
-     */
-    protected function getRemoteFileName()
+    private function getRemoteFileName()
     {
         switch ($this->getPlatform()) {
             case self::LINUX32:
-                return "chromedriver_linux32.zip";
+                return 'chromedriver_linux32.zip';
             case self::LINUX64:
-                return "chromedriver_linux64.zip";
+                return 'chromedriver_linux64.zip';
             case self::MAC64:
-                return "chromedriver_mac64.zip";
+                return 'chromedriver_mac64.zip';
             case self::WIN32:
-                return "chromedriver_win32.zip";
+                return 'chromedriver_win32.zip';
             default:
                 throw new \Exception('Platform is not set.');
         }
     }
 
-    /**
-     * @return string
-     * @throws \Exception
-     */
-    protected function getExecutableFileName()
+    private function getExecutableFileName()
     {
         switch ($this->getPlatform()) {
             case self::LINUX32:
@@ -331,10 +330,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         }
     }
 
-    /**
-     * @return array
-     */
-    protected function getPlatformNames()
+    private function getPlatformNames()
     {
         return [
             self::LINUX32 => 'Linux 32Bits',

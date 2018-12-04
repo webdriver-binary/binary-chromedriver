@@ -1,36 +1,25 @@
 # binary-chromedriver
 
 This is the composer dependency you want if you happen to do some Behat testing with Selenium. It 
-will download the adequat chromedriver version for your dev platform, whether it's Linux 
+will download the correct chromedriver version for your dev platform, whether it's Linux 
 (32bits or 64bits), OSX or Windows.
 
-By default, latest version of the Chrome Driver will be downloaded
+By default either appropriate version (that matches with installed browser) or latest version of the 
+driver will be downloaded.
     
 ## Configuring Extra
-
-If your dev platform happens to be coherent with your test platform, you can by-pass 
-platform selection with:
-
-```json
-{
-  "extra": {
-    "lbaey/chromedriver": {
-      "bypass-select": true
-    }
-  }
-}
-```
 
 If you want a specific version of ChromeDriver, use:
 
 ```json
 {
   "extra": {
-    "lbaey/chromedriver": {
+    "chromedriver": {
       "version": "2.33"
     }
   }
 }
 ```
 
-If you don't specify ChromeDriver version, the latest available version will be downloaded.
+If you don't specify ChromeDriver version, either appropriate version (that matches with installed 
+browser) or latest version of the driver will be downloaded.
