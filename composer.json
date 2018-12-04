@@ -24,9 +24,9 @@
         }
     ],
     "support": {
-        "source": "https://github.com/vaimo/chromedriver",
-        "docs": "https://github.com/vaimo/chromedriver",
-        "issues": "https://github.com/vaimo/chromedriver/issues"
+        "source": "https://github.com/vaimo/binary-chromedriver",
+        "docs": "https://github.com/vaimo/binary-chromedriver",
+        "issues": "https://github.com/vaimo/binary-chromedriver/issues"
     },
     "keywords": [
         "chromedriver",
