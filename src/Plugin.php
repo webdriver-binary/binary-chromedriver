@@ -8,21 +8,7 @@
  */
 namespace Vaimo\ChromeDriver;
 
-use Composer\Cache;
-use Composer\Composer;
-use Composer\Config;
-use Composer\EventDispatcher\EventSubscriberInterface;
-use Composer\Factory;
-use Composer\IO\IOInterface;
-use Composer\Package\CompletePackage;
-use Composer\Plugin\PluginInterface;
-use Composer\Script\Event;
-use Composer\Script\ScriptEvents;
-use Composer\Util\Filesystem;
-use Composer\Util\RemoteFilesystem;
-use Composer\Util\ProcessExecutor;
-
-class Plugin implements PluginInterface, EventSubscriberInterface
+class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatcher\EventSubscriberInterface
 {
     const UNKNOWN = 'unknown';
     const LINUX32 = 'linux32';
@@ -31,22 +17,22 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     const WIN32 = 'win32';
 
     /**
-     * @var Composer
+     * @var \Composer\Composer
      */
     protected $composer;
 
     /**
-     * @var IOInterface
+     * @var \Composer\IO\IOInterface
      */
     protected $io;
 
     /**
-     * @var Cache
+     * @var \Composer\Cache
      */
     protected $cache;
 
     /**
-     * @var Config
+     * @var \Composer\Config
      */
     protected $config;
 
@@ -59,63 +45,46 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $this->versionParser = new \Composer\Semver\VersionParser();
     }
-
-    /**
-     * @return array
-     */
+    
     public static function getSubscribedEvents()
     {
         return array(
-            ScriptEvents::POST_INSTALL_CMD => 'onPostInstallCmd',
-            ScriptEvents::POST_UPDATE_CMD => 'onPostUpdateCmd',
+            \Composer\Script\ScriptEvents::POST_INSTALL_CMD => 'onPostInstallCmd',
+            \Composer\Script\ScriptEvents::POST_UPDATE_CMD => 'onPostUpdateCmd',
         );
     }
-
-    /**
-     * @param Composer $composer
-     * @param IOInterface $io
-     */
-    public function activate(Composer $composer, IOInterface $io)
+    
+    public function activate(\Composer\Composer $composer, \Composer\IO\IOInterface $io)
     {
         $this->composer = $composer;
         $this->io = $io;
         $this->config = $this->composer->getConfig();
-        $this->cache = new Cache(
+        
+        $this->cache = new \Composer\Cache(
             $this->io,
             implode(DIRECTORY_SEPARATOR, [
                 $this->config->get('cache-dir'),
                 'files',
-                'lbaey-chromedriver',
+                'vaimo-chromedriver',
                 'downloaded-bin'
             ])
         );
     }
-
-    /**
-     * Handle post install command events.
-     *
-     * @param Event $event The event to handle.
-     *
-     */
-    public function onPostInstallCmd(Event $event)
-    {
-        $this->installDriver($event);
-    }
-
-    /**
-     * Handle post update command events.
-     *
-     * @param Event $event The event to handle.
-     *
-     */
-    public function onPostUpdateCmd(Event $event)
+    
+    public function onPostInstallCmd(\Composer\Script\Event $event)
     {
         $this->installDriver($event);
     }
     
-    protected function installDriver(Event $event)
+    public function onPostUpdateCmd(\Composer\Script\Event $event)
+    {
+        $this->installDriver($event);
+    }
+    
+    protected function installDriver(\Composer\Script\Event $event)
     {
         $baseUrl = 'https://chromedriver.storage.googleapis.com';
+        
         $downloadUrlTemplate = '{{base}}/{{version}}/{{file}}';
         $versionUrlTemplate = '{{base}}/LATEST_RELEASE';
 
@@ -149,7 +118,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $output = '';
 
         if (file_exists($chromeDriverPath) && is_executable($chromeDriverPath)) {
-            $processExecutor = new ProcessExecutor($this->io);
+            $processExecutor = new \Composer\Util\ProcessExecutor($this->io);
             $processExecutor::setTimeout(10);
             $processExecutor->execute($chromeDriverPath . ' --version', $output);
 
@@ -164,7 +133,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         $this->io->write(sprintf('<info>Installing <comment>ChromeDriver</comment> (v%s)</info>', $version));
 
-        $fs = new Filesystem();
+        $fs = new \Composer\Util\Filesystem();
         $fs->ensureDirectoryExists($this->cache->getRoot() . $version);
         $fs->ensureDirectoryExists($this->config->get('bin-dir'));
 

@@ -1,7 +1,6 @@
 # binary-chromedriver
 
-This is the composer dependency you want if you happen to do some Behat testing with Selenium. It 
-will download the correct chromedriver version for your dev platform, whether it's Linux 
+Downloads correct chromedriver version for your development platform, whether it's Linux 
 (32bits or 64bits), OSX or Windows.
 
 By default either appropriate version (that matches with installed browser) or latest version of the 
