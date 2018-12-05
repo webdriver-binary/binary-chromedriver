@@ -25,17 +25,7 @@ class Config
     ) {
         $this->configOwner = $configOwner;
     }
-    
-    public function getRequestUrlConfig()
-    {
-        $baseUrl = 'https://chromedriver.storage.googleapis.com';
-        
-        return [
-            self::REQUEST_VERSION => sprintf('%s/LATEST_RELEASE', $baseUrl),
-            self::REQUEST_DOWNLOAD => sprintf('%s/{{version}}/{{file}}', $baseUrl)
-        ];
-    }
-    
+
     public function getPreferences()
     {
         $extra = $this->configOwner->getExtra();
@@ -48,6 +38,21 @@ class Config
             $defaults,
             isset($extra['chromedriver']) ? $extra['chromedriver'] : []
         );
+    }
+
+    public function getDriverName()
+    {
+        return 'ChromeDriver';
+    }
+    
+    public function getRequestUrlConfig()
+    {
+        $baseUrl = 'https://chromedriver.storage.googleapis.com';
+        
+        return [
+            self::REQUEST_VERSION => sprintf('%s/LATEST_RELEASE', $baseUrl),
+            self::REQUEST_DOWNLOAD => sprintf('%s/{{version}}/{{file}}', $baseUrl)
+        ];
     }
     
     public function getBrowserBinaryPaths()
@@ -70,11 +75,6 @@ class Config
         return [
             '%s -version' => ['Google Chrome %s']  
         ];
-    }
-
-    public function getDriverName()
-    {
-        return 'ChromeDriver';
     }
     
     public function getDriverVersionPollingConfig()
