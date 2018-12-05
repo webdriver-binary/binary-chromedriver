@@ -5,7 +5,7 @@
  */
 namespace Vaimo\ChromeDriver\Plugin;
 
-use Vaimo\ChromeDriver\Utils\OsDetector;
+use Vaimo\ChromeDriver\Installer\PlatformAnalyser as Platform;
 
 class Config
 {
@@ -18,21 +18,14 @@ class Config
     private $configOwner;
 
     /**
-     * @var \Vaimo\ChromeDriver\Utils\OsDetector
-     */
-    private $osDetector;
-
-    /**
      * @param \Composer\Package\PackageInterface $configOwner
      */
     public function __construct(
         \Composer\Package\PackageInterface $configOwner
     ) {
         $this->configOwner = $configOwner;
-        
-        $this->osDetector = new \Vaimo\ChromeDriver\Utils\OsDetector();
     }
-
+    
     public function getRequestUrlConfig()
     {
         $baseUrl = 'https://chromedriver.storage.googleapis.com';
@@ -65,17 +58,17 @@ class Config
     
     public function getBrowserBinaryPaths()
     {
-        return array(
-            OsDetector::TYPE_LINUX32 => [
+        return [
+            Platform::TYPE_LINUX32 => [
                 '/usr/bin/google-chrome'
             ],
-            OsDetector::TYPE_LINUX64 => [
+            Platform::TYPE_LINUX64 => [
                 '/usr/bin/google-chrome'
             ],
-            OsDetector::TYPE_MAC64 => [
+            Platform::TYPE_MAC64 => [
                 '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
             ]
-        );
+        ];
     }
     
     public function getBrowserVersionPollingConfig()
@@ -85,6 +78,11 @@ class Config
         ];
     }
 
+    public function getDriverName()
+    {
+        return 'ChromeDriver';
+    }
+    
     public function getDriverVersionPollingConfig()
     {
         return [
@@ -118,22 +116,22 @@ class Config
     public function getRemoteFileNames()
     {
         return [
-            OsDetector::TYPE_LINUX32 => 'chromedriver_linux32.zip',
-            OsDetector::TYPE_LINUX64 => 'chromedriver_linux64.zip',
-            OsDetector::TYPE_MAC64 => 'chromedriver_mac64.zip',
-            OsDetector::TYPE_WIN32 => 'chromedriver_win32.zip',
-            OsDetector::TYPE_WIN64 => 'chromedriver_win32.zip'
+            Platform::TYPE_LINUX32 => 'chromedriver_linux32.zip',
+            Platform::TYPE_LINUX64 => 'chromedriver_linux64.zip',
+            Platform::TYPE_MAC64 => 'chromedriver_mac64.zip',
+            Platform::TYPE_WIN32 => 'chromedriver_win32.zip',
+            Platform::TYPE_WIN64 => 'chromedriver_win32.zip'
         ];
     }
 
     public function getExecutableFileNames()
     {
         return [
-            OsDetector::TYPE_LINUX32 => 'chromedriver',
-            OsDetector::TYPE_LINUX64 => 'chromedriver',
-            OsDetector::TYPE_MAC64 => 'chromedriver',
-            OsDetector::TYPE_WIN32 => 'chromedriver.exe',
-            OsDetector::TYPE_WIN64 => 'chromedriver.exe'
+            Platform::TYPE_LINUX32 => 'chromedriver',
+            Platform::TYPE_LINUX64 => 'chromedriver',
+            Platform::TYPE_MAC64 => 'chromedriver',
+            Platform::TYPE_WIN32 => 'chromedriver.exe',
+            Platform::TYPE_WIN64 => 'chromedriver.exe'
         ];
     }
 }

@@ -7,16 +7,6 @@ namespace Vaimo\ChromeDriver\Installer;
 
 class Utils
 {
-    /**
-     * @var \Composer\Semver\VersionParser
-     */
-    private $versionParser;
-
-    public function __construct() 
-    {
-        $this->versionParser = new \Composer\Semver\VersionParser();
-    }
-    
     public function stringFromTemplate($template, array $values)
     {
         $variables = array_combine(
@@ -28,16 +18,7 @@ class Utils
 
         return str_replace(array_keys($variables), $variables, $template);
     }
-
-    public function validateVersion($version)
-    {
-        try {
-            $this->versionParser->parseConstraints($version);
-        } catch (\UnexpectedValueException $exception) {
-            throw new \Exception(sprintf('Incorrect version string: "%s"', $version));
-        }
-    }
-
+    
     public function getHeaders($url)
     {
         $headers = get_headers($url);
@@ -50,5 +31,29 @@ class Utils
                 return trim(substr($value, strpos($value, ':')), ': ');
             }, $headers)
         );
+    }
+
+    public function recursiveGlob($pattern, $flags = 0)
+    {
+        $files = glob($pattern, $flags);
+
+        foreach (glob(dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir) {
+            $files = array_merge(
+                $files,
+                $this->recursiveGlob(
+                    $this->composePath($dir, basename($pattern)), 
+                    $flags
+                )
+            );
+        }
+
+        return $files;
+    }
+    
+    public function composePath()
+    {
+        $segments = func_get_args();
+        
+        return implode(DIRECTORY_SEPARATOR, $segments);
     }
 }

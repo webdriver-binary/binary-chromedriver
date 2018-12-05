@@ -8,13 +8,19 @@ namespace Vaimo\ChromeDriver\Installer;
 class VersionResolver
 {
     /**
+     * @var \Composer\Package\Version\VersionParser 
+     */
+    private $versionParser;
+    
+    /**
      * @var \Vaimo\ChromeDriver\Installer\Utils
      */
-    private $installedUtils;
+    private $installerUtils;
 
     public function __construct() 
     {
-        $this->installedUtils = new \Vaimo\ChromeDriver\Installer\Utils();
+        $this->versionParser = new \Composer\Package\Version\VersionParser();
+        $this->installerUtils = new \Vaimo\ChromeDriver\Installer\Utils();
     }
     
     public function pollForVersion(array $binaryPaths, array $versionPollingConfig)
@@ -45,8 +51,8 @@ class VersionResolver
                     $result = reset($matches);
 
                     try {
-                        $this->installedUtils->validateVersion($result);
-                    } catch (\Exception $exception) {
+                        $this->versionParser->parseConstraints($result);
+                    } catch (\UnexpectedValueException $exception) {
                         continue;
                     }
 

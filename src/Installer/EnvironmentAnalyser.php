@@ -5,7 +5,7 @@
  */
 namespace Vaimo\ChromeDriver\Installer;
 
-class BrowserDetector
+class EnvironmentAnalyser
 {
     /**
      * @var \Vaimo\ChromeDriver\Plugin\Config
@@ -13,15 +13,10 @@ class BrowserDetector
     private $pluginConfig;
     
     /**
-     * @var \Vaimo\ChromeDriver\Utils\OsDetector
+     * @var \Vaimo\ChromeDriver\Installer\PlatformAnalyser
      */
-    private $osDetector;
-
-    /**
-     * @var \Vaimo\ChromeDriver\Installer\Utils
-     */
-    private $installedUtils;
-
+    private $platformAnalyser;
+    
     /**
      * @var \Vaimo\ChromeDriver\Installer\VersionResolver
      */
@@ -35,46 +30,22 @@ class BrowserDetector
     ) {
         $this->pluginConfig = $pluginConfig;
         
-        $this->osDetector = new \Vaimo\ChromeDriver\Utils\OsDetector();
-        $this->installedUtils = new \Vaimo\ChromeDriver\Installer\Utils();
+        $this->platformAnalyser = new \Vaimo\ChromeDriver\Installer\PlatformAnalyser();
         $this->versionResolver = new \Vaimo\ChromeDriver\Installer\VersionResolver();
     }
-    
+
     public function resolveBrowserVersion()
     {
         $binaryPaths = $this->pluginConfig->getBrowserBinaryPaths();
-        $platformCode = $this->osDetector->getPlatformCode();
-        
+        $platformCode = $this->platformAnalyser->getPlatformCode();
+
         if (!isset($binaryPaths[$platformCode])) {
             return '';
         }
-        
+
         return $this->versionResolver->pollForVersion(
-            $binaryPaths[$platformCode], 
+            $binaryPaths[$platformCode],
             $this->pluginConfig->getBrowserVersionPollingConfig()
         );
-    }
-
-    public function resolveRequiredVersion()
-    {
-        $chromeVersion = $this->resolveBrowserVersion();
-
-        if (!$chromeVersion) {
-            return '';
-        }
-
-        $majorVersion = strtok($chromeVersion, '.');
-
-        $driverVersionMap = $this->pluginConfig->getBrowserDriverVersionMap();
-
-        foreach ($driverVersionMap as $browserMajor => $driverVersion) {
-            if ($majorVersion < $browserMajor) {
-                continue;
-            }
-
-            return $driverVersion;
-        }
-
-        return '';
     }
 }
