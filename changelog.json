@@ -3,6 +3,9 @@
         "breaking": [
             "config: old config value (chromedriver-version) no longer supported/used; only extra/chromedrier/version respected",
             "code: use built-in Composer downloader and extractor logic instead of relying on a custom one"
+        ],
+        "maintenance": [
+            "everything that relates to downloading and installing the driver now centrally configured in plugin configuration (rather than being hard-coded all over the place)"
         ]
     },
     "3.0.0": {
