@@ -44,16 +44,10 @@ class Config
             'version' => null
         ];
 
-        $config = array_replace(
+        return array_replace(
             $defaults,
             isset($extra['chromedriver']) ? $extra['chromedriver'] : []
         );
-
-        if (isset($config['chromedriver-version'])) {
-            $config['version'] = $config['chromedriver-version'];
-        }
-
-        return $config;
     }
     
     public function getBrowserBinaryPaths()
