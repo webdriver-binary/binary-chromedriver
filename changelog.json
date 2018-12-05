@@ -1,7 +1,8 @@
 {
     "4.0.0": {
-        "feature": [
-            "use built-in Composer downloader and extractor logic instead of relying on a custom one"
+        "breaking": [
+            "config: old config value (chromedriver-version) no longer supported/used; only extra/chromedrier/version respected",
+            "code: use built-in Composer downloader and extractor logic instead of relying on a custom one"
         ]
     },
     "3.0.0": {
