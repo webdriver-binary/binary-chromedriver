@@ -44,6 +44,12 @@ class DownloadManager
      */
     private $utils;
 
+    /**
+     * @param \Composer\Downloader\DownloadManager $downloadManager
+     * @param \Composer\Package\CompletePackage $ownerPackage
+     * @param \Composer\Cache $cacheManager
+     * @param Config $pluginConfig
+     */
     public function __construct(
         \Composer\Downloader\DownloadManager $downloadManager,
         \Composer\Package\CompletePackage $ownerPackage,

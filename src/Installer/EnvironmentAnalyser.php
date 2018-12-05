@@ -36,8 +36,8 @@ class EnvironmentAnalyser
 
     public function resolveBrowserVersion()
     {
-        $binaryPaths = $this->pluginConfig->getBrowserBinaryPaths();
         $platformCode = $this->platformAnalyser->getPlatformCode();
+        $binaryPaths = $this->pluginConfig->getBrowserBinaryPaths();
 
         if (!isset($binaryPaths[$platformCode])) {
             return '';
