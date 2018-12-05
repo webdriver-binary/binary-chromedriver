@@ -1,4 +1,9 @@
 {
+    "3.1.0": {
+        "feature": [
+            "use built-in Composer downloader and extractor logic instead of relying on a custom one"
+        ]
+    },
     "3.0.0": {
         "breaking": [
             "namespace changed to be under Vaimo",
