@@ -4,7 +4,6 @@
     "license": "MIT",
     "description": "Utility for downloading Chrome Driver binary for current os/platform",
     "require": {
-        "ext-zip": "*",
         "composer-plugin-api": "^1.0"
     },
     "require-dev": {
