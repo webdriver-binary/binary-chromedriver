@@ -1,14 +1,16 @@
 # binary-chromedriver
 
-Downloads correct chromedriver version for your development platform, whether it's Linux 
-(32bits or 64bits), OSX or Windows.
+Downloads chromedriver binary for Linux (32bits or 64bits), OSX or Windows. 
 
-By default either appropriate version (that matches with installed browser) or latest version of the 
-driver will be downloaded.
+The binary version is determined by the following factors:
+
+* what browser version is currently installed (if binary found from the system).
+* specified/configured version (see below under 'Configuration' topic).
+* latest available version (polled from remote, official end-point).
     
-## Configuring Extra
+## Configuration
 
-If you want a specific version of ChromeDriver, use:
+Although the binary downloader usually ends up positively detecting the appropriate driver version that needs to be downloaded, user still has an option to specify the version explicity when needed.
 
 ```json
 {
@@ -20,5 +22,3 @@ If you want a specific version of ChromeDriver, use:
 }
 ```
 
-If you don't specify ChromeDriver version, either appropriate version (that matches with installed 
-browser) or latest version of the driver will be downloaded.
