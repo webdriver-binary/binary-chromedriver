@@ -97,6 +97,11 @@ class ProjectAnalyser
             if (!$version && $versionCheckUrl) {
                 $version = trim(@file_get_contents($versionCheckUrl));
             }
+
+            if (!$version) {
+                $versionMap = array_filter($this->pluginConfig->getBrowserDriverVersionMap());
+                $version = reset($versionMap);   
+            }
         }
 
         try {

@@ -9,8 +9,8 @@ use Vaimo\ChromeDriver\Installer\PlatformAnalyser as Platform;
 
 class Config
 {
-    const REQUEST_VERSION = 'base';
-    const REQUEST_DOWNLOAD = 'base';
+    const REQUEST_VERSION = 'version';
+    const REQUEST_DOWNLOAD = 'download';
     
     /**
      * @var \Composer\Package\PackageInterface
@@ -103,7 +103,8 @@ class Config
             '53' => '2.24',
             '51' => '2.22',
             '44' => '2.19',
-            '42' => '2.15'
+            '42' => '2.15',
+            '1' => '2.0'
         ];
     }
     

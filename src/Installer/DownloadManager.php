@@ -146,9 +146,12 @@ class DownloadManager
         if (!isset($remoteFiles[$platformCode])) {
             throw new \Exception('Failed to resolve a file for the platform. Download driver manually');
         }
-        
-        $remoteFileName = $remoteFiles[$platformCode];
 
+        $remoteFileName = $this->utils->stringFromTemplate(
+            $remoteFiles[$platformCode],
+            ['version' => $version]
+        );
+        
         return $this->utils->stringFromTemplate(
             $requestConfig[Config::REQUEST_DOWNLOAD],
             ['version' => $version, 'file' => $remoteFileName]

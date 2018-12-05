@@ -1,4 +1,9 @@
 {
+    "4.0.1": {
+        "fix": [
+            "bad constant names used for config value references in code which caused latest version detection to fail"
+        ]
+    },
     "4.0.0": {
         "breaking": [
             "config: old config value (chromedriver-version) no longer supported/used; only extra/chromedrier/version respected",
