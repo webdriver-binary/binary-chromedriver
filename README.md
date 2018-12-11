@@ -10,7 +10,8 @@ The binary version is determined by the following factors:
     
 ## Configuration
 
-Although the binary downloader usually ends up positively detecting the appropriate driver version that needs to be downloaded, user still has an option to specify the version explicity when needed.
+Although the binary downloader usually ends up positively detecting the appropriate driver version 
+that needs to be downloaded, user still has an option to specify the version explicitly when needed.
 
 ```json
 {
