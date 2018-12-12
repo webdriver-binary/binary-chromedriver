@@ -65,10 +65,10 @@ class Config implements \Vaimo\WebDriverBinaryDownloader\Interfaces\ConfigInterf
                 '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
             ],
             Platform::TYPE_WIN32 => [
-                'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
+                'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe'
             ],
             Platform::TYPE_WIN64 => [
-                'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
+                'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe'
             ]
         ];
     }
@@ -76,15 +76,15 @@ class Config implements \Vaimo\WebDriverBinaryDownloader\Interfaces\ConfigInterf
     public function getBrowserVersionPollingConfig()
     {
         return [
-            '%s -version' => ['Google Chrome %s'],
-            'wmic datafile where name="%s" get Version /value' => ['Version=%']
+            '%s -version' => ['Google Chrome ([0-9].+)'],
+            'wmic datafile where name="%s" get Version /value' => ['Version=([0-9].+)']
         ];
     }
     
     public function getDriverVersionPollingConfig()
     {
         return [
-            '%s --version' => ['ChromeDriver %s (']
+            '%s --version' => ['ChromeDriver ([0-9].+) \(']
         ];
     }
     

@@ -5,7 +5,7 @@
     "description": "Utility for downloading Chrome Driver binary for current os/platform",
     "require": {
         "composer-plugin-api": "^1.0",
-        "vaimo/webdriver-binary-downloader": "^1.0.0"
+        "vaimo/webdriver-binary-downloader": "^2.0.0"
     },
     "require-dev": {
         "vaimo/composer-changelogs": "^0.9.1"
