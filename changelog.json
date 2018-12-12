@@ -1,4 +1,12 @@
 {
+    "5.0.0": {
+        "breaking": [
+            "(code) started to rely on external general-issue library for most of the implementation; only configuration remains in this package"
+        ],
+        "feature": [
+            "support for browser version detection added for Windows"
+        ]
+    },
     "4.0.1": {
         "fix": [
             "bad constant names used for config value references in code which caused latest version detection to fail"
