@@ -7,16 +7,10 @@ namespace Vaimo\ChromeDriver;
 
 class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatcher\EventSubscriberInterface
 {
-    /**
-     * @var \Vaimo\ChromeDriver\Installer
-     */
-    private $driverInstaller;
-
     public function activate(\Composer\Composer $composer, \Composer\IO\IOInterface $io)
     {
-        $this->driverInstaller = new \Vaimo\ChromeDriver\Installer($composer, $io);
     }
-    
+
     public static function getSubscribedEvents()
     {
         return [
@@ -24,9 +18,16 @@ class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatc
             \Composer\Script\ScriptEvents::POST_UPDATE_CMD => 'installDriver',
         ];
     }
-    
-    public function installDriver()
+
+    public function installDriver(\Composer\Script\Event $event)
     {
-        $this->driverInstaller->execute();
+        $composerRuntime = $event->getComposer();
+        $io = $event->getIo();
+
+        $driverInstaller = new \Vaimo\WebDriverBinaryDownloader\Installer($composerRuntime, $io);
+
+        $pluginConfig = new \Vaimo\ChromeDriver\Plugin\Config($composerRuntime->getPackage());
+
+        $driverInstaller->executeWithConfig($pluginConfig);
     }
 }

@@ -5,13 +5,10 @@
  */
 namespace Vaimo\ChromeDriver\Plugin;
 
-use Vaimo\ChromeDriver\Installer\PlatformAnalyser as Platform;
+use Vaimo\WebDriverBinaryDownloader\Interfaces\PlatformAnalyserInterface as Platform;
 
-class Config
+class Config implements \Vaimo\WebDriverBinaryDownloader\Interfaces\ConfigInterface
 {
-    const REQUEST_VERSION = 'version';
-    const REQUEST_DOWNLOAD = 'download';
-    
     /**
      * @var \Composer\Package\PackageInterface
      */
@@ -66,6 +63,12 @@ class Config
             ],
             Platform::TYPE_MAC64 => [
                 '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+            ],
+            Platform::TYPE_WIN32 => [
+                'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
+            ],
+            Platform::TYPE_WIN64 => [
+                'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
             ]
         ];
     }
@@ -73,7 +76,8 @@ class Config
     public function getBrowserVersionPollingConfig()
     {
         return [
-            '%s -version' => ['Google Chrome %s']  
+            '%s -version' => ['Google Chrome %s'],
+            'wmic datafile where name="%s" get Version /value' => ['Version=%']
         ];
     }
     
@@ -128,5 +132,15 @@ class Config
             Platform::TYPE_WIN32 => 'chromedriver.exe',
             Platform::TYPE_WIN64 => 'chromedriver.exe'
         ];
+    }
+
+    public function getDriverVersionHashMap()
+    {
+        return [];
+    }
+    
+    public function getExecutableFileRenames()
+    {
+        return [];
     }
 }
