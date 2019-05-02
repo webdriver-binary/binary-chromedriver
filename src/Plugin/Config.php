@@ -27,13 +27,13 @@ class Config implements \Vaimo\WebDriverBinaryDownloader\Interfaces\ConfigInterf
     {
         $extra = $this->configOwner->getExtra();
 
-        $defaults = [
+        $defaults = array(
             'version' => null
-        ];
+        );
 
         return array_replace(
             $defaults,
-            isset($extra['chromedriver']) ? $extra['chromedriver'] : []
+            isset($extra['chromedriver']) ? $extra['chromedriver'] : array()
         );
     }
 
@@ -46,54 +46,54 @@ class Config implements \Vaimo\WebDriverBinaryDownloader\Interfaces\ConfigInterf
     {
         $baseUrl = 'https://chromedriver.storage.googleapis.com';
         
-        return [
-            self::REQUEST_VERSION => [
+        return array(
+            self::REQUEST_VERSION => array(
                 sprintf('%s/LATEST_RELEASE_{{major}}', $baseUrl),
                 sprintf('%s/LATEST_RELEASE', $baseUrl)
-            ],
+            ),
             self::REQUEST_DOWNLOAD => sprintf('%s/{{version}}/{{file}}', $baseUrl)
-        ];
+        );
     }
     
     public function getBrowserBinaryPaths()
     {
-        return [
-            Platform::TYPE_LINUX32 => [
+        return array(
+            Platform::TYPE_LINUX32 => array(
                 '/usr/bin/google-chrome'
-            ],
-            Platform::TYPE_LINUX64 => [
+            ),
+            Platform::TYPE_LINUX64 => array(
                 '/usr/bin/google-chrome'
-            ],
-            Platform::TYPE_MAC64 => [
+            ),
+            Platform::TYPE_MAC64 => array(
                 '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
-            ],
-            Platform::TYPE_WIN32 => [
+            ),
+            Platform::TYPE_WIN32 => array(
                 'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe'
-            ],
-            Platform::TYPE_WIN64 => [
+            ),
+            Platform::TYPE_WIN64 => array(
                 'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe'
-            ]
-        ];
+            )
+        );
     }
     
     public function getBrowserVersionPollingConfig()
     {
-        return [
-            '%s -version' => ['Google Chrome ([0-9].+)'],
-            'wmic datafile where name="%s" get Version /value' => ['Version=([0-9].+)']
-        ];
+        return array(
+            '%s -version' => array('Google Chrome ([0-9].+)'),
+            'wmic datafile where name="%s" get Version /value' => array('Version=([0-9].+)')
+        );
     }
     
     public function getDriverVersionPollingConfig()
     {
-        return [
-            '%s --version' => ['ChromeDriver ([0-9].+) \(']
-        ];
+        return array(
+            '%s --version' => array('ChromeDriver ([0-9].+) \(')
+        );
     }
     
     public function getBrowserDriverVersionMap()
     {
-        return [
+        return array(
             '76' => '',
             '75' => '75.0.3770.8',
             '74' => '74.0.3729.6',
@@ -117,38 +117,38 @@ class Config implements \Vaimo\WebDriverBinaryDownloader\Interfaces\ConfigInterf
             '44' => '2.19',
             '42' => '2.15',
             '1' => '2.0'
-        ];
+        );
     }
     
     public function getRemoteFileNames()
     {
-        return [
+        return array(
             Platform::TYPE_LINUX32 => 'chromedriver_linux32.zip',
             Platform::TYPE_LINUX64 => 'chromedriver_linux64.zip',
             Platform::TYPE_MAC64 => 'chromedriver_mac64.zip',
             Platform::TYPE_WIN32 => 'chromedriver_win32.zip',
             Platform::TYPE_WIN64 => 'chromedriver_win32.zip'
-        ];
+        );
     }
 
     public function getExecutableFileNames()
     {
-        return [
+        return array(
             Platform::TYPE_LINUX32 => 'chromedriver',
             Platform::TYPE_LINUX64 => 'chromedriver',
             Platform::TYPE_MAC64 => 'chromedriver',
             Platform::TYPE_WIN32 => 'chromedriver.exe',
             Platform::TYPE_WIN64 => 'chromedriver.exe'
-        ];
+        );
     }
 
     public function getDriverVersionHashMap()
     {
-        return [];
+        return array();
     }
     
     public function getExecutableFileRenames()
     {
-        return [];
+        return array();
     }
 }
