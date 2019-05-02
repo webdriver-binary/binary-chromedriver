@@ -4,9 +4,13 @@
         "possible to generate change-logs in other formats as well (when needed) and to do automatic releases based on",
         "added change-log records. More on how to use it: https://github.com/vaimo/composer-changelogs"
     ],
-    "5.1.0": {
+    "5.0.2": {
         "fix": [
             "driver version map updated to make sure wrong (newest) driver does not get downloaded for some relatively new (but not the newest) Chrome releases (versions: 70, 71)"
+        ],
+        "maintenance": [
+            "introduced the use of Static Code Analysis tools",
+            "code downgraded so to make the package installable on relatively old php versions"
         ]
     }, 
     "5.0.1": {
