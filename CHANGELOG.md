@@ -2,7 +2,7 @@
 
 _This file has been auto-generated from the contents of changelog.json_
 
-## 5.0.2
+## 5.0.2 (2019-05-02)
 
 ### Fix
 
@@ -13,7 +13,6 @@ _This file has been auto-generated from the contents of changelog.json_
 * introduced the use of Static Code Analysis tools
 * code downgraded so to make the package installable on relatively old php versions
 
-Links: [src](https://github.com/vaimo/binary-chromedriver/tree/5.0.2) [diff](https://github.com/vaimo/binary-chromedriver/compare/5.0.1...5.0.2)
 
 ## 5.0.1 (2018-12-12)
 
@@ -21,7 +20,6 @@ Links: [src](https://github.com/vaimo/binary-chromedriver/tree/5.0.2) [diff](htt
 
 * bad unescaped path configured for browser binary for Windows which resulted in version polling not working
 
-Links: [src](https://github.com/vaimo/binary-chromedriver/tree/5.0.1) [diff](https://github.com/vaimo/binary-chromedriver/compare/5.0.0...5.0.1)
 
 ## 5.0.0 (2018-12-12)
 
@@ -33,7 +31,6 @@ Links: [src](https://github.com/vaimo/binary-chromedriver/tree/5.0.1) [diff](htt
 
 * support for browser version detection added for Windows
 
-Links: [src](https://github.com/vaimo/binary-chromedriver/tree/5.0.0) [diff](https://github.com/vaimo/binary-chromedriver/compare/4.0.1...5.0.0)
 
 ## 4.0.1 (2018-12-05)
 
@@ -41,7 +38,6 @@ Links: [src](https://github.com/vaimo/binary-chromedriver/tree/5.0.0) [diff](htt
 
 * bad constant names used for config value references in code which caused latest version detection to fail
 
-Links: [src](https://github.com/vaimo/binary-chromedriver/tree/4.0.1) [diff](https://github.com/vaimo/binary-chromedriver/compare/4.0.0...4.0.1)
 
 ## 4.0.0 (2018-12-05)
 
@@ -54,7 +50,6 @@ Links: [src](https://github.com/vaimo/binary-chromedriver/tree/4.0.1) [diff](htt
 
 * everything that relates to downloading and installing the driver now centrally configured in plugin configuration (rather than being hard-coded all over the place)
 
-Links: [src](https://github.com/vaimo/binary-chromedriver/tree/4.0.0) [diff](https://github.com/vaimo/binary-chromedriver/compare/3.0.0...4.0.0)
 
 ## 3.0.0 (2018-12-04)
 
@@ -68,12 +63,9 @@ Links: [src](https://github.com/vaimo/binary-chromedriver/tree/4.0.0) [diff](htt
 
 * added information about what this package is replacing
 
-Links: [src](https://github.com/vaimo/binary-chromedriver/tree/3.0.0) [diff](https://github.com/vaimo/binary-chromedriver/compare/2.36.0...3.0.0)
 
 ## 2.36.0 (2018-12-03)
 
 ### Feature
 
 * choose chromeDriver version based on installed Chrome Browser version (if it's available)
-
-Links: [src](https://github.com/vaimo/binary-chromedriver/tree/2.36.0) [diff](https://github.com/vaimo/binary-chromedriver/compare/9aef900fc1dcc7ad9d69569b91366ec8972d75e1...2.36.0)
