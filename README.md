@@ -12,7 +12,9 @@ The binary version is determined by the following factors:
 * what browser version is currently installed (if binary found from the system).
 * specified/configured version (see below under 'Configuration' topic).
 * latest available version (polled from remote, official end-point).
-    
+
+More information on recent changes [HERE](./CHANGELOG.md).
+
 ## Configuration
 
 Although the binary downloader usually ends up positively detecting the appropriate 
