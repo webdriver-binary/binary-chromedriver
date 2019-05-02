@@ -47,7 +47,10 @@ class Config implements \Vaimo\WebDriverBinaryDownloader\Interfaces\ConfigInterf
         $baseUrl = 'https://chromedriver.storage.googleapis.com';
         
         return [
-            self::REQUEST_VERSION => sprintf('%s/LATEST_RELEASE', $baseUrl),
+            self::REQUEST_VERSION => [
+                sprintf('%s/LATEST_RELEASE_{{major}}', $baseUrl),
+                sprintf('%s/LATEST_RELEASE', $baseUrl)
+            ],
             self::REQUEST_DOWNLOAD => sprintf('%s/{{version}}/{{file}}', $baseUrl)
         ];
     }
@@ -91,7 +94,12 @@ class Config implements \Vaimo\WebDriverBinaryDownloader\Interfaces\ConfigInterf
     public function getBrowserDriverVersionMap()
     {
         return [
-            '72' => '',
+            '76' => '',
+            '75' => '75.0.3770.8',
+            '74' => '74.0.3729.6',
+            '73' => '73.0.3683.68',
+            '71' => '2.46',
+            '70' => '2.45',
             '69' => '2.44',
             '68' => '2.42',
             '67' => '2.41',

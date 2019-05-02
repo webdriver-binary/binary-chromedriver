@@ -1,4 +1,14 @@
 {
+    "_readme": [
+        "The contents of this file are used to generate CHANGELOG.md; It's kept in JSON/parsable format to make it",
+        "possible to generate change-logs in other formats as well (when needed) and to do automatic releases based on",
+        "added change-log records. More on how to use it: https://github.com/vaimo/composer-changelogs"
+    ],
+    "5.1.0": {
+        "fix": [
+            "driver version map updated to make sure wrong (newest) driver does not get downloaded for some relatively new (but not the newest) Chrome releases (versions: 70, 71)"
+        ]
+    }, 
     "5.0.1": {
         "fix": [
             "bad unescaped path configured for browser binary for Windows which resulted in version polling not working"

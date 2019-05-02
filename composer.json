@@ -4,11 +4,23 @@
     "license": "MIT",
     "description": "Utility for downloading Chrome Driver binary for current os/platform",
     "require": {
+        "php": ">=5.3.0",
         "composer-plugin-api": "^1.0",
-        "vaimo/webdriver-binary-downloader": "^2.0.0"
+        "vaimo/webdriver-binary-downloader": "^2.1.0"
     },
     "require-dev": {
-        "vaimo/composer-changelogs": "^0.9.1"
+        "composer/composer": "^1.0.0",
+        "vaimo/composer-changelogs": "^0.15.4",
+        "squizlabs/php_codesniffer": "^2.9.2",
+        "phpcompatibility/php-compatibility": "^9.1.1",
+        "phpmd/phpmd": "^2.6.0",
+        "phpunit/phpunit": "^4.8.36",
+        "sebastian/phpcpd": "^1.4.3"
+    },
+    "config": {
+        "platform": {
+            "php": "5.3.9"
+        }
     },
     "replace": {
         "lbaey/chromedriver": "*"
@@ -39,6 +51,18 @@
         "binary downloader",
         "binary"
     ],
+    "scripts-descriptions": {
+        "test": "Run tests",
+        "code:analyse": "Run static code analysis for the source code",
+        "code:normalise": "Apply automatic fixes to the code based on the static code analysis (where applicable)"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "code:analyse": "bin/analyse",
+        "code:normalise": "bin/normalise",
+        "post-install-cmd": "bin/bootstrap",
+        "post-update-cmd" : "bin/bootstrap"
+    },
     "autoload": {
         "psr-4": {
             "Vaimo\\ChromeDriver\\": "src"
@@ -47,7 +71,10 @@
     "extra": {
         "class": "Vaimo\\ChromeDriver\\Plugin",
         "changelog": {
-            "source": "changelog.json"
+            "source": "changelog.json",
+            "output": {
+                "md": "CHANGELOG.md"
+            }
         }
     }
 }
