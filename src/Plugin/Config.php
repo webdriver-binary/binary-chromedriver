@@ -94,8 +94,10 @@ class Config implements \Vaimo\WebDriverBinaryDownloader\Interfaces\ConfigInterf
     public function getBrowserDriverVersionMap()
     {
         return array(
-            '76' => '',
-            '75' => '75.0.3770.8',
+            '78' => '',
+            '77' => '77.0.3865.40',
+            '76' => '76.0.3809.126',
+            '75' => '75.0.3770.140',
             '74' => '74.0.3729.6',
             '73' => '73.0.3683.68',
             '71' => '2.46',
