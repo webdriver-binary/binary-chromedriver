@@ -4,12 +4,12 @@
     "license": "MIT",
     "description": "Utility for downloading Chrome Driver binary for current os/platform",
     "require": {
-        "php": ">=5.3.0",
-        "composer-plugin-api": "^1.0",
+        "php": ">=7.2",
+        "composer-plugin-api": "^1.0 | ^2.0",
         "vaimo/webdriver-binary-downloader": "^2.1.0"
     },
     "require-dev": {
-        "composer/composer": "^1.0.0",
+        "composer/composer": "^1.0.0 | ^2.0.0",
         "vaimo/composer-changelogs": "^0.15.4",
         "squizlabs/php_codesniffer": "^2.9.2",
         "phpcompatibility/php-compatibility": "^9.1.1",
@@ -17,13 +17,9 @@
         "phpunit/phpunit": "^4.8.36",
         "sebastian/phpcpd": "^1.4.3"
     },
-    "config": {
-        "platform": {
-            "php": "5.3.9"
-        }
-    },
     "replace": {
-        "lbaey/chromedriver": "*"
+        "lbaey/chromedriver": "*",
+        "vaimo/binary-chromedriver": "*"
     },
     "authors": [
         {
