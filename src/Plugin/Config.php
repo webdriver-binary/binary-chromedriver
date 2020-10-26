@@ -1,10 +1,10 @@
 <?php
 
-namespace LANFest\ChromeDriver\Plugin;
+namespace Lanfest\ChromeDriver\Plugin;
 
-use LANFest\WebDriverBinaryDownloader\Interfaces\PlatformAnalyserInterface as Platform;
+use Lanfest\WebDriverBinaryDownloader\Interfaces\PlatformAnalyserInterface as Platform;
 
-class Config implements \LANFest\WebDriverBinaryDownloader\Interfaces\ConfigInterface
+class Config implements \Lanfest\WebDriverBinaryDownloader\Interfaces\ConfigInterface
 {
     /**
      * @var \Composer\Package\PackageInterface

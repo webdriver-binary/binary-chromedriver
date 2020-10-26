@@ -1,5 +1,5 @@
 {
-    "name": "LANFest/binary-chromedriver",
+    "name": "lanfest/binary-chromedriver",
     "type": "composer-plugin",
     "license": "MIT",
     "description": "Utility for downloading Chrome Driver binary for current os/platform",
@@ -44,6 +44,6 @@
         }
     },
     "extra": {
-        "class": "LANFest\\ChromeDriver\\Plugin"
+        "class": "Lanfest\\ChromeDriver\\Plugin"
     }
 }

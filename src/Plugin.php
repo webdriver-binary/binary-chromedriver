@@ -1,6 +1,6 @@
 <?php
 
-namespace LANFest\ChromeDriver;
+namespace Lanfest\ChromeDriver;
 
 class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatcher\EventSubscriberInterface
 {
@@ -30,12 +30,12 @@ class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatc
 
     public function installDriver()
     {
-        $driverInstaller = new \LANFest\WebDriverBinaryDownloader\Installer(
+        $driverInstaller = new \Lanfest\WebDriverBinaryDownloader\Installer(
             $this->composerRuntime,
             $this->cliIO
         );
         
-        $pluginConfig = new \LANFest\ChromeDriver\Plugin\Config(
+        $pluginConfig = new \Lanfest\ChromeDriver\Plugin\Config(
             $this->composerRuntime->getPackage()
         );
 
