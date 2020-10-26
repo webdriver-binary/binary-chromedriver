@@ -6,7 +6,7 @@
     "require": {
         "php": ">=7.2",
         "composer-plugin-api": "^1.0 | ^2.0",
-        "LANFest/webdriver-binary-downloader": "^2.1.0"
+        "lanfest/webdriver-binary-downloader": "^3.0.0"
     },
     "replace": {
         "lbaey/chromedriver": "*",
