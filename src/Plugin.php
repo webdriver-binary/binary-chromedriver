@@ -1,9 +1,6 @@
 <?php
-/**
- * Copyright © Vaimo Group. All rights reserved.
- * See LICENSE_VAIMO.txt for license details.
- */
-namespace Vaimo\ChromeDriver;
+
+namespace LANFest\ChromeDriver;
 
 class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatcher\EventSubscriberInterface
 {
@@ -33,12 +30,12 @@ class Plugin implements \Composer\Plugin\PluginInterface, \Composer\EventDispatc
 
     public function installDriver()
     {
-        $driverInstaller = new \Vaimo\WebDriverBinaryDownloader\Installer(
+        $driverInstaller = new \LANFest\WebDriverBinaryDownloader\Installer(
             $this->composerRuntime,
             $this->cliIO
         );
         
-        $pluginConfig = new \Vaimo\ChromeDriver\Plugin\Config(
+        $pluginConfig = new \LANFest\ChromeDriver\Plugin\Config(
             $this->composerRuntime->getPackage()
         );
 

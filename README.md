@@ -1,9 +1,9 @@
 # binary-chromedriver
 
-[![Latest Stable Version](https://poser.pugx.org/vaimo/binary-chromedriver/v/stable)](https://packagist.org/packages/vaimo/binary-chromedriver)
-[![Total Downloads](https://poser.pugx.org/vaimo/binary-chromedriver/downloads)](https://packagist.org/packages/vaimo/binary-chromedriver)
-[![Daily Downloads](https://poser.pugx.org/vaimo/binary-chromedriver/d/daily)](https://packagist.org/packages/vaimo/binary-chromedriver)
-[![License](https://poser.pugx.org/vaimo/binary-chromedriver/license)](https://packagist.org/packages/vaimo/binary-chromedriver)
+[![Latest Stable Version](https://poser.pugx.org/LANFest/binary-chromedriver/v/stable)](https://packagist.org/packages/LANFest/binary-chromedriver)
+[![Total Downloads](https://poser.pugx.org/LANFest/binary-chromedriver/downloads)](https://packagist.org/packages/LANFest/binary-chromedriver)
+[![Daily Downloads](https://poser.pugx.org/LANFest/binary-chromedriver/d/daily)](https://packagist.org/packages/LANFest/binary-chromedriver)
+[![License](https://poser.pugx.org/LANFest/binary-chromedriver/license)](https://packagist.org/packages/LANFest/binary-chromedriver)
 
 Downloads chromedriver binary for Linux (32bits or 64bits), macOS (Mac OS X) and Windows.
 

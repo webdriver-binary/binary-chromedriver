@@ -1,13 +1,10 @@
 <?php
-/**
- * Copyright © Vaimo Group. All rights reserved.
- * See LICENSE_VAIMO.txt for license details.
- */
-namespace Vaimo\ChromeDriver\Plugin;
 
-use Vaimo\WebDriverBinaryDownloader\Interfaces\PlatformAnalyserInterface as Platform;
+namespace LANFest\ChromeDriver\Plugin;
 
-class Config implements \Vaimo\WebDriverBinaryDownloader\Interfaces\ConfigInterface
+use LANFest\WebDriverBinaryDownloader\Interfaces\PlatformAnalyserInterface as Platform;
+
+class Config implements \LANFest\WebDriverBinaryDownloader\Interfaces\ConfigInterface
 {
     /**
      * @var \Composer\Package\PackageInterface

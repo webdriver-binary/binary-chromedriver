@@ -1,21 +1,12 @@
 {
-    "name": "vaimo/binary-chromedriver",
+    "name": "LANFest/binary-chromedriver",
     "type": "composer-plugin",
     "license": "MIT",
     "description": "Utility for downloading Chrome Driver binary for current os/platform",
     "require": {
         "php": ">=7.2",
         "composer-plugin-api": "^1.0 | ^2.0",
-        "vaimo/webdriver-binary-downloader": "^2.1.0"
-    },
-    "require-dev": {
-        "composer/composer": "^1.0.0 | ^2.0.0",
-        "vaimo/composer-changelogs": "^0.15.4",
-        "squizlabs/php_codesniffer": "^2.9.2",
-        "phpcompatibility/php-compatibility": "^9.1.1",
-        "phpmd/phpmd": "^2.6.0",
-        "phpunit/phpunit": "^4.8.36",
-        "sebastian/phpcpd": "^1.4.3"
+        "LANFest/webdriver-binary-downloader": "^2.1.0"
     },
     "replace": {
         "lbaey/chromedriver": "*",
@@ -23,14 +14,14 @@
     },
     "authors": [
         {
-            "name": "Allan Paiste",
-            "email": "allan.paiste@vaimo.com"
+            "name": "Jakob Perry",
+            "email": "jakob.perry@lfest.org"
         }
     ],
     "support": {
-        "source": "https://github.com/vaimo/binary-chromedriver",
-        "docs": "https://github.com/vaimo/binary-chromedriver",
-        "issues": "https://github.com/vaimo/binary-chromedriver/issues"
+        "source": "https://github.com/LANFest/binary-chromedriver",
+        "docs": "https://github.com/LANFest/binary-chromedriver",
+        "issues": "https://github.com/LANFest/binary-chromedriver/issues"
     },
     "keywords": [
         "chromedriver",
@@ -47,30 +38,12 @@
         "binary downloader",
         "binary"
     ],
-    "scripts-descriptions": {
-        "test": "Run tests",
-        "code:analyse": "Run static code analysis for the source code",
-        "code:normalise": "Apply automatic fixes to the code based on the static code analysis (where applicable)"
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "code:analyse": "bin/analyse",
-        "code:normalise": "bin/normalise",
-        "post-install-cmd": "bin/bootstrap",
-        "post-update-cmd" : "bin/bootstrap"
-    },
     "autoload": {
         "psr-4": {
-            "Vaimo\\ChromeDriver\\": "src"
+            "LANFest\\ChromeDriver\\": "src"
         }
     },
     "extra": {
-        "class": "Vaimo\\ChromeDriver\\Plugin",
-        "changelog": {
-            "source": "changelog.json",
-            "output": {
-                "md": "CHANGELOG.md"
-            }
-        }
+        "class": "LANFest\\ChromeDriver\\Plugin"
     }
 }
