@@ -1,96 +1,93 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lanfest\ChromeDriver\Plugin;
 
 use Lanfest\WebDriverBinaryDownloader\Interfaces\PlatformAnalyserInterface as Platform;
 
 class Config implements \Lanfest\WebDriverBinaryDownloader\Interfaces\ConfigInterface
 {
-    /**
-     * @var \Composer\Package\PackageInterface
-     */
+    /** @var \Composer\Package\PackageInterface */
     private $configOwner;
 
-    /**
-     * @param \Composer\Package\PackageInterface $configOwner
-     */
     public function __construct(
         \Composer\Package\PackageInterface $configOwner
     ) {
         $this->configOwner = $configOwner;
     }
 
-    public function getPreferences()
+    public function getPreferences(): array
     {
         $extra = $this->configOwner->getExtra();
 
-        $defaults = array(
-            'version' => null
-        );
+        $defaults = [
+            'version' => null,
+        ];
 
         return array_replace(
             $defaults,
-            isset($extra['chromedriver']) ? $extra['chromedriver'] : array()
+            $extra['chromedriver'] ?? []
         );
     }
 
-    public function getDriverName()
+    public function getDriverName(): string
     {
         return 'ChromeDriver';
     }
-    
-    public function getRequestUrlConfig()
+
+    public function getRequestUrlConfig(): array
     {
         $baseUrl = 'https://chromedriver.storage.googleapis.com';
-        
-        return array(
-            self::REQUEST_VERSION => array(
+
+        return [
+            self::REQUEST_VERSION => [
                 sprintf('%s/LATEST_RELEASE_{{major}}', $baseUrl),
-                sprintf('%s/LATEST_RELEASE', $baseUrl)
-            ),
-            self::REQUEST_DOWNLOAD => sprintf('%s/{{version}}/{{file}}', $baseUrl)
-        );
+                sprintf('%s/LATEST_RELEASE', $baseUrl),
+            ],
+            self::REQUEST_DOWNLOAD => sprintf('%s/{{version}}/{{file}}', $baseUrl),
+        ];
     }
-    
-    public function getBrowserBinaryPaths()
+
+    public function getBrowserBinaryPaths(): array
     {
-        return array(
-            Platform::TYPE_LINUX32 => array(
-                '/usr/bin/google-chrome'
-            ),
-            Platform::TYPE_LINUX64 => array(
-                '/usr/bin/google-chrome'
-            ),
-            Platform::TYPE_MAC64 => array(
-                '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
-            ),
-            Platform::TYPE_WIN32 => array(
-                'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe'
-            ),
-            Platform::TYPE_WIN64 => array(
-                'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe'
-            )
-        );
+        return [
+            Platform::TYPE_LINUX32 => [
+                '/usr/bin/google-chrome',
+            ],
+            Platform::TYPE_LINUX64 => [
+                '/usr/bin/google-chrome',
+            ],
+            Platform::TYPE_MAC64 => [
+                '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome',
+            ],
+            Platform::TYPE_WIN32 => [
+                'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe',
+            ],
+            Platform::TYPE_WIN64 => [
+                'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe',
+            ],
+        ];
     }
-    
-    public function getBrowserVersionPollingConfig()
+
+    public function getBrowserVersionPollingConfig(): array
     {
-        return array(
-            '%s -version' => array('Google Chrome ([0-9].+)'),
-            'wmic datafile where name="%s" get Version /value' => array('Version=([0-9].+)')
-        );
+        return [
+            '%s -version' => ['Google Chrome ([0-9].+)'],
+            'wmic datafile where name="%s" get Version /value' => ['Version=([0-9].+)'],
+        ];
     }
-    
-    public function getDriverVersionPollingConfig()
+
+    public function getDriverVersionPollingConfig(): array
     {
-        return array(
-            '%s --version' => array('ChromeDriver ([0-9].+) \(')
-        );
+        return [
+            '%s --version' => ['ChromeDriver ([0-9].+) \('],
+        ];
     }
-    
-    public function getBrowserDriverVersionMap()
+
+    public function getBrowserDriverVersionMap(): array
     {
-        return array(
+        return [
             '78' => '',
             '77' => '77.0.3865.40',
             '76' => '76.0.3809.126',
@@ -115,39 +112,39 @@ class Config implements \Lanfest\WebDriverBinaryDownloader\Interfaces\ConfigInte
             '51' => '2.22',
             '44' => '2.19',
             '42' => '2.15',
-            '1' => '2.0'
-        );
+            '1' => '2.0',
+        ];
     }
-    
-    public function getRemoteFileNames()
+
+    public function getRemoteFileNames(): array
     {
-        return array(
+        return [
             Platform::TYPE_LINUX32 => 'chromedriver_linux32.zip',
             Platform::TYPE_LINUX64 => 'chromedriver_linux64.zip',
             Platform::TYPE_MAC64 => 'chromedriver_mac64.zip',
             Platform::TYPE_WIN32 => 'chromedriver_win32.zip',
-            Platform::TYPE_WIN64 => 'chromedriver_win32.zip'
-        );
+            Platform::TYPE_WIN64 => 'chromedriver_win32.zip',
+        ];
     }
 
-    public function getExecutableFileNames()
+    public function getExecutableFileNames(): array
     {
-        return array(
+        return [
             Platform::TYPE_LINUX32 => 'chromedriver',
             Platform::TYPE_LINUX64 => 'chromedriver',
             Platform::TYPE_MAC64 => 'chromedriver',
             Platform::TYPE_WIN32 => 'chromedriver.exe',
-            Platform::TYPE_WIN64 => 'chromedriver.exe'
-        );
+            Platform::TYPE_WIN64 => 'chromedriver.exe',
+        ];
     }
 
-    public function getDriverVersionHashMap()
+    public function getDriverVersionHashMap(): array
     {
-        return array();
+        return [];
     }
-    
-    public function getExecutableFileRenames()
+
+    public function getExecutableFileRenames(): array
     {
-        return array();
+        return [];
     }
 }
