@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lanfest\ChromeDriver\Plugin;
+namespace WebdriverBinary\ChromeDriver\Plugin;
 
-use Lanfest\WebDriverBinaryDownloader\Interfaces\PlatformAnalyserInterface as Platform;
+use WebdriverBinary\WebDriverBinaryDownloader\Interfaces\PlatformAnalyserInterface as Platform;
 
-class Config implements \Lanfest\WebDriverBinaryDownloader\Interfaces\ConfigInterface
+class Config implements \WebdriverBinary\WebDriverBinaryDownloader\Interfaces\ConfigInterface
 {
     /** @var \Composer\Package\PackageInterface */
     private $configOwner;

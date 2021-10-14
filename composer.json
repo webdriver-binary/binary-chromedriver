@@ -1,27 +1,22 @@
 {
-    "name": "lanfest/binary-chromedriver",
+    "name": "webdriver-binary/binary-chromedriver",
     "type": "composer-plugin",
     "license": "MIT",
     "description": "Utility for downloading Chrome Driver binary for current os/platform",
     "require": {
         "php": ">=7.2",
         "composer-plugin-api": "^1.0 | ^2.0",
-        "lanfest/webdriver-binary-downloader": "^3.0.1"
+        "webdriver-binary/webdriver-binary-downloader": "^3.0.1"
     },
     "replace": {
         "lbaey/chromedriver": "*",
-        "vaimo/binary-chromedriver": "*"
+        "vaimo/binary-chromedriver": "*",
+        "lanfest/binary-chromedriver": "*"
     },
-    "authors": [
-        {
-            "name": "Jakob Perry",
-            "email": "jakob.perry@lfest.org"
-        }
-    ],
     "support": {
-        "source": "https://github.com/LANFest/binary-chromedriver",
-        "docs": "https://github.com/LANFest/binary-chromedriver",
-        "issues": "https://github.com/LANFest/binary-chromedriver/issues"
+        "source": "https://github.com/webdriver-binary/binary-chromedriver",
+        "docs": "https://github.com/webdriver-binary/binary-chromedriver",
+        "issues": "https://github.com/webdriver-binary/binary-chromedriver/issues"
     },
     "keywords": [
         "chromedriver",
@@ -40,10 +35,10 @@
     ],
     "autoload": {
         "psr-4": {
-            "Lanfest\\ChromeDriver\\": "src"
+            "WebdriverBinary\\ChromeDriver\\": "src"
         }
     },
     "extra": {
-        "class": "Lanfest\\ChromeDriver\\Plugin"
+        "class": "WebdriverBinary\\ChromeDriver\\Plugin"
     }
 }
